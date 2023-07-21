@@ -9,9 +9,10 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
+import Svg, { Path } from "react-native-svg";
 import BgdImage from "../assets/images/bgd.jpg";
 
-export const LoginScreen = () => {
+export const RegistrationScreen = () => {
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
 
   return (
@@ -27,8 +28,25 @@ export const LoginScreen = () => {
             }}
           >
             <View style={styles.form}>
-              <Text style={styles.title}>Увійти</Text>
+              <View style={styles.avatarWrapper}>
+                <View style={styles.avatar}>
+                  <TouchableOpacity style={styles.iconThumb}>
+                    <Svg width={25} height={25} viewBox="0 0 25 25">
+                      <Path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M13 6H12V12H6V13H12V19H13V13H19V12H13V6Z"
+                        fill="#FF6C00"
+                      />
+                    </Svg>
+                  </TouchableOpacity>
+                </View>
+              </View>
+              <Text style={styles.title}>Реєстрація</Text>
               <View style={styles.fieldset}>
+                <View style={styles.field}>
+                  <TextInput placeholder="Логін" style={styles.input} />
+                </View>
                 <View style={styles.field}>
                   <TextInput
                     placeholder="Адреса електронної пошти"
@@ -43,10 +61,10 @@ export const LoginScreen = () => {
                 </View>
               </View>
               <TouchableOpacity style={styles.btn}>
-                <Text style={styles.loginTitle}>Увійти</Text>
+                <Text style={styles.registrationTitle}>Зареєструватися</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.link}>
-                <Text style={styles.label}>Немає акаунту? Зареєструватися</Text>
+                <Text style={styles.label}>Вже є акаунт? Увійти</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -68,17 +86,41 @@ const styles = StyleSheet.create({
   },
   containerRegister: {
     justifyContent: "center",
+
     backgroundColor: "#fff",
     borderTopRightRadius: 25,
     borderTopLeftRadius: 25,
     paddingBottom: 1,
   },
   form: {
-    paddingTop: 32,
     marginTop: -10,
     paddingHorizontal: 16,
     backgroundColor: "#fff",
     borderRadius: 20,
+  },
+  avatarWrapper: {
+    alignItems: "center",
+  },
+  avatar: {
+    position: "relative",
+    marginTop: -60,
+    marginHorizontal: "auto",
+    width: 120,
+    height: 120,
+    backgroundColor: "#F6F6F6",
+
+    borderRadius: 16,
+    marginBottom: 32,
+  },
+  iconThumb: {
+    position: "absolute",
+    borderColor: "#FF6C00",
+    borderWidth: 1,
+    borderRadius: 50,
+    bottom: 10,
+    right: -10,
+    width: 25,
+    height: 25,
   },
   fieldset: {
     gap: 16,
@@ -109,7 +151,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 18.75,
   },
-  loginTitle: {
+  registrationTitle: {
     fontSize: 16,
     lineHeight: 19,
     color: "#fff",
@@ -133,6 +175,6 @@ const styles = StyleSheet.create({
   },
   link: {
     alignItems: "center",
-    marginBottom: 144,
+    marginBottom: 66,
   },
 });
