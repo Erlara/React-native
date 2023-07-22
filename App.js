@@ -1,7 +1,11 @@
-import { RegistrationScreen } from "./Screens/RegistrationScreen";
 import React from "react";
 import { useFonts } from "expo-font";
-import { LoginScreen } from "./Screens/LoginScreen";
+import "react-native-gesture-handler";
+// import { Provider } from "react-redux";
+import { Main } from "./components/Main";
+
+// import { Text } from "react-native-svg";
+// import { PersistGate } from "redux-persist/integration/react";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -12,11 +16,13 @@ export default function App() {
   if (!fontsLoaded) {
     return null;
   }
-
   return (
     <>
-      <RegistrationScreen />
-      {/* <LoginScreen /> */}
+      {/* <Provider store={store}> */}
+      {/* <PersistGate loading={<Text>Loading...</Text>} persistor={persistor}> */}
+      <Main />
+      {/* </PersistGate> */}
+      {/* </Provider> */}
     </>
   );
 }

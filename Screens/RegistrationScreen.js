@@ -8,69 +8,130 @@ import {
   ImageBackground,
   KeyboardAvoidingView,
   Platform,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import BgdImage from "../assets/images/bgd.jpg";
 
+const registerUser = {
+  login: "",
+  email: "",
+  password: "",
+};
+
 export const RegistrationScreen = () => {
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
+  const [securePass, setSecurePass] = useState(true);
+  const [formData, setFormData] = useState(registerUser);
+
+  const handleSubmit = () => {
+    Keyboard.dismiss();
+    setIsShowKeyboard(false);
+    console.log(formData);
+    setFormData(registerUser);
+  };
 
   return (
-    <View style={styles.container}>
-      <ImageBackground style={styles.image} source={BgdImage}>
-        <KeyboardAvoidingView
-          behavior={Platform.OS == "ios" ? "padding" : "height"}
-        >
-          <View
-            style={{
-              ...styles.containerRegister,
-              marginBottom: isShowKeyboard ? 60 : 0,
-            }}
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <ImageBackground style={styles.image} source={BgdImage}>
+          <KeyboardAvoidingView
+            behavior={Platform.OS == "ios" ? "padding" : "height"}
           >
-            <View style={styles.form}>
-              <View style={styles.avatarWrapper}>
-                <View style={styles.avatar}>
-                  <TouchableOpacity style={styles.iconThumb}>
-                    <Svg width={25} height={25} viewBox="0 0 25 25">
-                      <Path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
-                        d="M13 6H12V12H6V13H12V19H13V13H19V12H13V6Z"
-                        fill="#FF6C00"
-                      />
-                    </Svg>
-                  </TouchableOpacity>
+            <View
+              style={{
+                ...styles.containerRegister,
+                marginBottom: isShowKeyboard ? 60 : 0,
+              }}
+            >
+              <View style={styles.form}>
+                <View style={styles.avatarWrapper}>
+                  <View style={styles.avatar}>
+                    <TouchableOpacity style={styles.iconThumb}>
+                      <Svg width={25} height={25} viewBox="0 0 25 25">
+                        <Path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M13 6H12V12H6V13H12V19H13V13H19V12H13V6Z"
+                          fill="#FF6C00"
+                        />
+                      </Svg>
+                    </TouchableOpacity>
+                  </View>
                 </View>
+                <Text style={styles.title}>Реєстрація</Text>
+                <View style={styles.fieldset}>
+                  <View style={styles.field}>
+                    <TextInput
+                      onFocus={() => setIsShowKeyboard(true)}
+                      value={formData.login}
+                      onChangeText={(value) =>
+                        setFormData((prevState) => ({
+                          ...prevState,
+                          login: value,
+                        }))
+                      }
+                      
+                      placeholder="Логін"
+                      style={styles.input}
+                    />
+                  </View>
+                  <View style={styles.field}>
+                    <TextInput
+                      onFocus={() => setIsShowKeyboard(true)}
+                      value={formData.email}
+                      onChangeText={(value) =>
+                        setFormData((prevState) => ({
+                          ...prevState,
+                          email: value,
+                        }))
+                      }
+                      
+                      placeholder="Адреса електронної пошти"
+                      style={styles.input}
+                    />
+                  </View>
+                  <View style={styles.field}>
+                    <TextInput
+                      onFocus={() => setIsShowKeyboard(true)}
+                      value={formData.password}
+                      onChangeText={(value) =>
+                        setFormData((prevState) => ({
+                          ...prevState,
+                          password: value,
+                        }))
+                      }
+                      secureTextEntry={securePass}
+                      
+                      placeholder="Пароль"
+                      style={styles.input}
+                    />
+                    <TouchableOpacity
+                      style={styles.inputBtn}
+                      onPress={() => setSecurePass((prevState) => !prevState)}
+                    >
+                      <Text style={styles.label}>
+                        {securePass ? "Показати" : "Приховати"}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+                <TouchableOpacity style={styles.btn} onPress={handleSubmit}>
+                  <Text style={styles.registrationTitle}>Зареєструватися</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.link}
+                  // onPress={() => navigation.navigate("Login")}
+                >
+                  <Text style={styles.label}>Вже є акаунт? Увійти</Text>
+                </TouchableOpacity>
               </View>
-              <Text style={styles.title}>Реєстрація</Text>
-              <View style={styles.fieldset}>
-                <View style={styles.field}>
-                  <TextInput placeholder="Логін" style={styles.input} />
-                </View>
-                <View style={styles.field}>
-                  <TextInput
-                    placeholder="Адреса електронної пошти"
-                    style={styles.input}
-                  />
-                </View>
-                <View style={styles.field}>
-                  <TextInput placeholder="Пароль" style={styles.input} />
-                  <TouchableOpacity style={styles.inputBtn}>
-                    <Text style={styles.label}>Показати</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-              <TouchableOpacity style={styles.btn}>
-                <Text style={styles.registrationTitle}>Зареєструватися</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.link}>
-                <Text style={styles.label}>Вже є акаунт? Увійти</Text>
-              </TouchableOpacity>
             </View>
-          </View>
-        </KeyboardAvoidingView>
-      </ImageBackground>
-    </View>
+          </KeyboardAvoidingView>
+        </ImageBackground>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -143,7 +204,7 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
     fontSize: 16,
     lineHeight: 19,
-    color: "#BDBDBD",
+    color: "#212121",
   },
   label: {
     fontFamily: "Roboto-Regular",
