@@ -11,14 +11,14 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-import BgdImage from "../assets/images/bgd.jpg";
+import BgdImage from "../../assets/images/bgd.jpg";
 
 const loginUser = {
   email: "",
   password: "",
 };
 
-export const LoginScreen = () => {
+export const LoginScreen = ({ navigation }) => {
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
   const [securePass, setSecurePass] = useState(true);
   const [formData, setFormData] = useState(loginUser);
@@ -28,6 +28,9 @@ export const LoginScreen = () => {
     setIsShowKeyboard(false);
     console.log(formData);
     setFormData(loginUser);
+    navigation.navigate("Home", {
+      screen: "PostsScreen",
+    });
   };
 
   return (
@@ -87,7 +90,7 @@ export const LoginScreen = () => {
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.link}
-                  // onPress={() => navigation.navigate("Registration")}
+                  onPress={() => navigation.navigate("Registration")}
                 >
                   <Text style={styles.label}>
                     Немає акаунту? Зареєструватися

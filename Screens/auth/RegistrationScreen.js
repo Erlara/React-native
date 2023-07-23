@@ -12,7 +12,7 @@ import {
   Keyboard,
 } from "react-native";
 import Svg, { Path } from "react-native-svg";
-import BgdImage from "../assets/images/bgd.jpg";
+import BgdImage from "../../assets/images/bgd.jpg";
 
 const registerUser = {
   login: "",
@@ -20,7 +20,7 @@ const registerUser = {
   password: "",
 };
 
-export const RegistrationScreen = () => {
+export const RegistrationScreen = ({ navigation }) => {
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
   const [securePass, setSecurePass] = useState(true);
   const [formData, setFormData] = useState(registerUser);
@@ -30,6 +30,9 @@ export const RegistrationScreen = () => {
     setIsShowKeyboard(false);
     console.log(formData);
     setFormData(registerUser);
+    navigation.navigate("Home", {
+      screen: "PostsScreen",
+    });
   };
 
   return (
@@ -72,7 +75,6 @@ export const RegistrationScreen = () => {
                           login: value,
                         }))
                       }
-                      
                       placeholder="Логін"
                       style={styles.input}
                     />
@@ -87,7 +89,6 @@ export const RegistrationScreen = () => {
                           email: value,
                         }))
                       }
-                      
                       placeholder="Адреса електронної пошти"
                       style={styles.input}
                     />
@@ -103,7 +104,6 @@ export const RegistrationScreen = () => {
                         }))
                       }
                       secureTextEntry={securePass}
-                      
                       placeholder="Пароль"
                       style={styles.input}
                     />
@@ -122,7 +122,7 @@ export const RegistrationScreen = () => {
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.link}
-                  // onPress={() => navigation.navigate("Login")}
+                  onPress={() => navigation.navigate("Login")}
                 >
                   <Text style={styles.label}>Вже є акаунт? Увійти</Text>
                 </TouchableOpacity>
