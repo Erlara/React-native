@@ -1,29 +1,32 @@
-//import { Text } from "react-native";
-//import { View } from "react-native";
 import { PostsScreen } from "./PostsScreen";
 import { CreatePostsScreen } from "./CreatePostsScreen";
 import { ProfileScreen } from "./ProfileScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-// import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import { Octicons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
+import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 
 const Tabs = createBottomTabNavigator();
 
 export const Home = ({ navigation }) => {
-  // const navigation = useNavigation();
+
+  const getTabBarStyle = (route) => {
+    const routeName = getFocusedRouteNameFromRoute(route) ?? "Home";
+    let display = routeName === "Коментарі" ? "none" : "flex";
+    return { display };
+  };
 
   return (
-    <Tabs.Navigator tabBarOptions={{ showLabel: false }}>
+    <Tabs.Navigator screenOptions={{ showLabel: false }}>
       <Tabs.Screen
-        name="Публікації"
+        name="PostsScreen"
         component={PostsScreen}
         options={({ route }) => ({
-          // tabBarStyle: getTabBarStyle(route),
+          tabBarStyle: getTabBarStyle(route),
           tabBarIcon: ({ focused, size, color }) => (
             <AntDesign name="appstore-o" size={24} color="#212121" />
           ),
@@ -53,7 +56,7 @@ export const Home = ({ navigation }) => {
           headerLeft: () => (
             <TouchableOpacity
               style={{ marginLeft: 15 }}
-              onPress={() => navigation.navigate("Публікації")}
+              onPress={() => navigation.navigate("PostsScreen")}
             >
               <Ionicons
                 name="ios-arrow-back-outline"

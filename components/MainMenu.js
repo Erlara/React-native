@@ -8,7 +8,7 @@ import "react-native-gesture-handler";
 
 const MainStack = createStackNavigator();
 
-export const Main = () => {
+export const MainMenu = () => {
   return (
     // <>
     //   <RegistrationScreen />

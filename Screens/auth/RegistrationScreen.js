@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   StyleSheet,
   Text,
+  Image,
   TouchableOpacity,
   TextInput,
   ImageBackground,
@@ -13,9 +14,13 @@ import {
 } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import BgdImage from "../../assets/images/bgd.jpg";
+import { useDispatch, useSelector } from "react-redux";
+import { selectIsLoggedIn } from "../../redux/auth/selectors";
+import avatar from "../../assets/images/avatar.jpg";
+import { register } from "../../redux/auth/authOperations";
 
 const registerUser = {
-  login: "",
+  nickName: "",
   email: "",
   password: "",
 };
@@ -25,18 +30,40 @@ export const RegistrationScreen = ({ navigation }) => {
   const [securePass, setSecurePass] = useState(true);
   const [formData, setFormData] = useState(registerUser);
 
-  const handleSubmit = () => {
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigation.navigate("Home", {
+        screen: "PostsScreen",
+      });
+    }
+  }, [isLoggedIn]);
+
+  const keyBoardHide = () => {
     Keyboard.dismiss();
     setIsShowKeyboard(false);
+  };
+
+  const handleSubmit = () => {
+    keyBoardHide();
     console.log(formData);
     setFormData(registerUser);
+    dispatch(
+      register({
+        nickName: formData.nickName,
+        email: formData.email,
+        password: formData.password,
+      })
+    );
     navigation.navigate("Home", {
       screen: "PostsScreen",
     });
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <TouchableWithoutFeedback onPress={keyBoardHide}>
       <View style={styles.container}>
         <ImageBackground style={styles.image} source={BgdImage}>
           <KeyboardAvoidingView
@@ -51,6 +78,10 @@ export const RegistrationScreen = ({ navigation }) => {
               <View style={styles.form}>
                 <View style={styles.avatarWrapper}>
                   <View style={styles.avatar}>
+                    <Image
+                      style={styles.imageAvatar}
+                      // source={avatar}
+                    />
                     <TouchableOpacity style={styles.iconThumb}>
                       <Svg width={25} height={25} viewBox="0 0 25 25">
                         <Path
@@ -68,11 +99,11 @@ export const RegistrationScreen = ({ navigation }) => {
                   <View style={styles.field}>
                     <TextInput
                       onFocus={() => setIsShowKeyboard(true)}
-                      value={formData.login}
+                      value={formData.nickName}
                       onChangeText={(value) =>
                         setFormData((prevState) => ({
                           ...prevState,
-                          login: value,
+                          nickName: value,
                         }))
                       }
                       placeholder="Логін"
@@ -172,6 +203,15 @@ const styles = StyleSheet.create({
 
     borderRadius: 16,
     marginBottom: 32,
+  },
+  imageAvatar: {
+    // width: 120,
+    // height: 120,
+    // position: "absolute",
+    //alignSelf: "center",
+    // top: -60,
+    // backgroundColor: "#F6F6F6",
+    borderRadius: 16,
   },
   iconThumb: {
     position: "absolute",

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -12,6 +12,9 @@ import {
   Keyboard,
 } from "react-native";
 import BgdImage from "../../assets/images/bgd.jpg";
+import { useDispatch, useSelector } from "react-redux";
+import { selectIsLoggedIn } from "../../redux/auth/selectors";
+import { logIn } from "../../redux/auth/authOperations";
 
 const loginUser = {
   email: "",
@@ -23,18 +26,40 @@ export const LoginScreen = ({ navigation }) => {
   const [securePass, setSecurePass] = useState(true);
   const [formData, setFormData] = useState(loginUser);
 
-  const handleSubmit = () => {
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const dispatch = useDispatch();
+
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigation.navigate("Home", {
+        screen: "PostsScreen",
+      });
+    }
+  }, [isLoggedIn]);
+
+  const keyBoardHide = () => {
     Keyboard.dismiss();
     setIsShowKeyboard(false);
+  };
+
+  const handleSubmit = () => {
+    keyBoardHide();
     console.log(formData);
     setFormData(loginUser);
+    dispatch(
+      logIn({
+        email: formData.email,
+        password: formData.password,
+      })
+    );
     navigation.navigate("Home", {
       screen: "PostsScreen",
     });
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <TouchableWithoutFeedback onPress={keyBoardHide}>
       <View style={styles.container}>
         <ImageBackground style={styles.image} source={BgdImage}>
           <KeyboardAvoidingView

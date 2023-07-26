@@ -1,30 +1,24 @@
 import { TouchableOpacity } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
-//import { useNavigation } from "@react-navigation/native";
-//import { DefaultPostsScreen } from "./DefaultPostsScreen";
 import { MapScreen } from "./MapScreen";
 import { CommentsScreen } from "./CommentsScreen";
 import { MaterialIcons } from "@expo/vector-icons";
 import { DefaultPostsScreen } from "./DefaultPostsScreen";
-//import { useDispatch } from "react-redux";
-//import { logOut } from "../redux/auth/authOperations";
-
-//import { Text } from "react-native";
-//import { View } from "react-native";
+import { useDispatch } from "react-redux";
+import { logOut } from "../../redux/auth/authOperations";
 
 export const PostsScreen = ({ navigation }) => {
-  const PostStack = createStackNavigator();
-  //   const navigation = useNavigation();
-  //   const dispatch = useDispatch();
+  const PostsStack = createStackNavigator();
+  const dispatch = useDispatch();
 
   const handleLogout = () => {
-    // dispatch(logOut());
+    dispatch(logOut());
     navigation.navigate("Login");
   };
 
   return (
-    <PostStack.Navigator>
-      <PostStack.Screen
+    <PostsStack.Navigator>
+      <PostsStack.Screen
         name="Публікації"
         component={DefaultPostsScreen}
         options={{
@@ -40,8 +34,8 @@ export const PostsScreen = ({ navigation }) => {
           headerLeft: () => false,
         }}
       />
-      <PostStack.Screen name="Локація" component={MapScreen} />
-      <PostStack.Screen name="Коментарі" component={CommentsScreen} />
-    </PostStack.Navigator>
+      <PostsStack.Screen name="Локація" component={MapScreen} />
+      <PostsStack.Screen name="Коментарі" component={CommentsScreen} />
+    </PostsStack.Navigator>
   );
 };
