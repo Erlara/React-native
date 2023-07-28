@@ -7,20 +7,9 @@ import { getFirestore } from "firebase/firestore";
 // Функція для підключення сховища файлів в проект
 import { getStorage } from "firebase/storage";
 import { enableLogging } from "firebase/database";
-//import { getAnalytics } from "firebase/analytics";
 
 enableLogging(true);
 
-// const firebaseConfig = {
-//   apiKey: "AIzaSyAbiVxAl2CvEvOnp8-VScHgJDI6vxo7xy4",
-//   authDomain: "myproject-c7155.firebaseapp.com",
-//   databaseURL: "https://myproject-c7155.firebaseio.com",
-//   projectId: "myproject-c7155",
-//   storageBucket: "myproject-c7155.appspot.com",
-//   messagingSenderId: "sender-id",
-//   appId: "app-id",
-//   measurementId: "G-measurement-id",
-// };
 const firebaseConfig = {
   apiKey: "AIzaSyAbiVxAl2CvEvOnp8-VScHgJDI6vxo7xy4",
   authDomain: "myproject-c7155.firebaseapp.com",
@@ -33,7 +22,6 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-//const analytics = getAnalytics(app);
 
 export const auth = getAuth(app);
 export const db = getFirestore(app);
