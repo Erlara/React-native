@@ -70,8 +70,8 @@ export const DefaultPostsScreen = ({ route }) => {
         data={posts}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => {
-          const locationName = item.data.locationName;
-          const location = item.data.location;
+          const title = item.data.title;
+          const location = item.data.locationName;
           const photo = item.data.photo;
           const comments = item.data.comments;
           const numberOfComments = comments.length;
@@ -80,14 +80,7 @@ export const DefaultPostsScreen = ({ route }) => {
           return (
             <View style={styles.postContainer}>
               <Image source={{ uri: photo }} style={styles.image} />
-              {locationName ? (
-                <Text style={styles.text}>
-                  locationName
-                  {locationName}
-                </Text>
-              ) : (
-                ""
-              )}
+              {title ? <Text style={styles.text}>{title}</Text> : ""}
               <View style={styles.btnContainer}>
                 <View style={styles.leftButtonsContainer}>
                   <TouchableOpacity
@@ -126,6 +119,16 @@ export const DefaultPostsScreen = ({ route }) => {
                       size={22}
                       color={numberOfLikes !== 0 ? "#FF6C00" : "#BDBDBD"}
                     />
+                    <Text
+                      style={{
+                        color: "#BDBDBD",
+                        marginLeft: 5,
+                        fontSize: 16,
+                        color: numberOfLikes !== 0 ? "#212121" : "#BDBDBD",
+                      }}
+                    >
+                      {numberOfLikes}
+                    </Text>
                   </TouchableOpacity>
                 </View>
 
@@ -134,7 +137,7 @@ export const DefaultPostsScreen = ({ route }) => {
                     activeOpacity={0.7}
                     style={styles.button}
                     onPress={() =>
-                      navigation.navigate("Локація", { locationName, location })
+                      navigation.navigate("Локація", { title, location })
                     }
                   >
                     <Ionicons
@@ -142,9 +145,7 @@ export const DefaultPostsScreen = ({ route }) => {
                       size={24}
                       color="#BDBDBD"
                     />
-                    <Text style={styles.locationText}>
-                      {locationName} locationName
-                    </Text>
+                    <Text style={styles.locationText}>{location}</Text>
                   </TouchableOpacity>
                 ) : (
                   ""

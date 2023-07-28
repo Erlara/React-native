@@ -205,13 +205,7 @@ const styles = StyleSheet.create({
     marginBottom: 32,
   },
   imageAvatar: {
-    // width: 120,
-    // height: 120,
-    // position: "absolute",
-    //alignSelf: "center",
-    // top: -60,
-    // backgroundColor: "#F6F6F6",
-    borderRadius: 16,
+        borderRadius: 16,
   },
   iconThumb: {
     position: "absolute",
@@ -279,3 +273,4 @@ const styles = StyleSheet.create({
     marginBottom: 66,
   },
 });
+

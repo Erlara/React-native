@@ -8,7 +8,15 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from "react-native";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  doc,
+  getDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "../../firebase/config.js";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
 import { useSelector, useDispatch } from "react-redux";
@@ -22,9 +30,10 @@ import { AntDesign } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { logOut } from "../../redux/auth/authOperations.js";
 
-export const ProfileScreen = (navigation) => {
+export const ProfileScreen = () => {
   const [posts, setPosts] = useState([]);
 
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
   const userId = useSelector(selectUserId);
@@ -55,6 +64,22 @@ export const ProfileScreen = (navigation) => {
   const handleLogout = () => {
     dispatch(logOut());
     navigation.navigate("Login");
+  };
+
+  const onLikePressed = async (postId) => {
+    try {
+      const postRef = doc(db, "posts", postId);
+      const postSnapshot = await getDoc(postRef);
+      const postLikes = postSnapshot.data().likes;
+      const updatedLikes = Number(postLikes + 1);
+
+      await updateDoc(postRef, {
+        likes: updatedLikes,
+      });
+      console.log("Document likes updated");
+    } catch (error) {
+      console.error("Error adding like:", error);
+    }
   };
 
   return (
@@ -89,7 +114,7 @@ export const ProfileScreen = (navigation) => {
                 <View style={styles.postContainer}>
                   <Image source={{ uri: photo }} style={styles.image} />
                   {locationName ? (
-                    <Text style={styles.text}>{locationName} </Text>
+                    <Text style={styles.text}>{locationName}</Text>
                   ) : (
                     ""
                   )}
@@ -119,7 +144,6 @@ export const ProfileScreen = (navigation) => {
                           }}
                         >
                           {numberOfComments || 0}
-                          coments
                         </Text>
                       </TouchableOpacity>
 
@@ -142,7 +166,6 @@ export const ProfileScreen = (navigation) => {
                           }}
                         >
                           {numberOfLikes}
-                          like
                         </Text>
                       </TouchableOpacity>
                     </View>

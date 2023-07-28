@@ -10,9 +10,6 @@ const MainStack = createStackNavigator();
 
 export const MainMenu = () => {
   return (
-    // <>
-    //   <RegistrationScreen />
-    // </>
     <NavigationContainer>
       <MainStack.Navigator initialRouteName="Login">
         <MainStack.Screen

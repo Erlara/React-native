@@ -98,10 +98,10 @@ export const CommentsScreen = ({ route }) => {
                   />
                 )}
                 <View style={commentContainerStyle}>
-                  <Text style={styles.commentText}>coment</Text>
+                  <Text style={styles.commentText}>{item.comment}</Text>
                   <View style={styles.timeContainer}>
-                    <Text style={styles.commentTime}>datapart</Text>
-                    <Text style={styles.commentTime}>timepart</Text>
+                    <Text style={styles.commentTime}>{datePart} |</Text>
+                    <Text style={styles.commentTime}> {timePart}</Text>
                   </View>
                 </View>
                 {isReversed && (

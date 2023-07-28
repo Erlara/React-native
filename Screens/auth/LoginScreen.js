@@ -10,6 +10,7 @@ import {
   Platform,
   TouchableWithoutFeedback,
   Keyboard,
+  Alert,
 } from "react-native";
 import BgdImage from "../../assets/images/bgd.jpg";
 import { useDispatch, useSelector } from "react-redux";
@@ -29,7 +30,6 @@ export const LoginScreen = ({ navigation }) => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const dispatch = useDispatch();
 
-
   useEffect(() => {
     if (isLoggedIn) {
       navigation.navigate("Home", {
@@ -44,6 +44,11 @@ export const LoginScreen = ({ navigation }) => {
   };
 
   const handleSubmit = () => {
+    if (!formData.email.includes("@") || formData.email.length < 7) {
+      Alert.alert(
+        "Your email has to include '@' and be more than 7 symbols!!!"
+      );
+    }
     keyBoardHide();
     console.log(formData);
     setFormData(loginUser);
@@ -85,6 +90,8 @@ export const LoginScreen = ({ navigation }) => {
                       }
                       placeholder="Адреса електронної пошти"
                       style={styles.input}
+                      type="email"
+                      onFocus={() => setIsShowKeyboard(true)}
                     />
                   </View>
                   <View style={styles.field}>
@@ -97,6 +104,7 @@ export const LoginScreen = ({ navigation }) => {
                         }))
                       }
                       secureTextEntry={securePass}
+                      onFocus={() => setIsShowKeyboard(true)}
                       placeholder="Пароль"
                       style={styles.input}
                     />

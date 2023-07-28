@@ -13,7 +13,6 @@ import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 const Tabs = createBottomTabNavigator();
 
 export const Home = ({ navigation }) => {
-
   const getTabBarStyle = (route) => {
     const routeName = getFocusedRouteNameFromRoute(route) ?? "Home";
     let display = routeName === "Коментарі" ? "none" : "flex";
@@ -23,7 +22,7 @@ export const Home = ({ navigation }) => {
   return (
     <Tabs.Navigator screenOptions={{ showLabel: false }}>
       <Tabs.Screen
-        name="PostsScreen"
+        name="Всі публікації"
         component={PostsScreen}
         options={({ route }) => ({
           tabBarStyle: getTabBarStyle(route),
@@ -56,7 +55,7 @@ export const Home = ({ navigation }) => {
           headerLeft: () => (
             <TouchableOpacity
               style={{ marginLeft: 15 }}
-              onPress={() => navigation.navigate("PostsScreen")}
+              onPress={() => navigation.navigate("Всі публікації")}
             >
               <Ionicons
                 name="ios-arrow-back-outline"
@@ -68,7 +67,7 @@ export const Home = ({ navigation }) => {
         }}
       />
       <Tabs.Screen
-        name="ProfileScreen"
+        name="Профіль"
         component={ProfileScreen}
         options={{
           tabBarIcon: ({ focused, size, color }) => (

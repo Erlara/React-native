@@ -32,10 +32,10 @@ export const CreatePostsScreen = ({ navigation }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState(null);
   const [formData, setFormData] = useState(initialData);
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
-  const [location, setLocation] = useState(null);
+  const [locationCoords, setLocationCoords] = useState(null);
 
   const userId = useSelector(selectUserId);
   const user = useSelector(selectUser);
@@ -91,7 +91,7 @@ export const CreatePostsScreen = ({ navigation }) => {
       photo: photo,
       title: formData.name,
       locationName: formData.location,
-      location: location,
+      location: locationCoords,
       comments: [],
       likes: 0,
       userId,
@@ -114,24 +114,21 @@ export const CreatePostsScreen = ({ navigation }) => {
     clearScreen();
   };
 
-  const clearScreen = () => {
-    setImage("");
-    setFormData(initialData);
-  };
-
   const takePhoto = async () => {
-    if (cameraRef) {
-      const { uri } = await cameraRef.takePictureAsync();
-      await MediaLibrary.createAssetAsync(uri);
-      setImage(uri);
-      console.log(image);
-    }
+    const photo = await cameraRef.takePictureAsync();
+    console.log("camera ---->", photo.uri);
+    setImage(photo.uri);
     let location = await Location.getCurrentPositionAsync({});
     const coords = {
       latitude: location.coords.latitude,
       longitude: location.coords.longitude,
     };
-    setLocation(coords);
+    setLocationCoords(coords);
+  };
+
+  const clearScreen = () => {
+    setImage(null);
+    setFormData(initialData);
   };
 
   return (
@@ -156,13 +153,6 @@ export const CreatePostsScreen = ({ navigation }) => {
                   ...styles.snapContainer,
                   backgroundColor: image ? "#FFFfff4C" : "#FFF",
                 }}
-                // onPress={async () => {
-                //   if (cameraRef) {
-                //     const { uri } = await cameraRef.takePictureAsync();
-                //     await MediaLibrary.createAssetAsync(uri);
-                //     console.log(uri);
-                //   }
-                // }}
                 onPress={takePhoto}
               >
                 <MaterialCommunityIcons
